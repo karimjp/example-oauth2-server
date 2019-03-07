@@ -88,7 +88,7 @@ working well.
 
 ```python
 # website/routes.py
-from Flask import Blueprint
+from flask import Blueprint
 bp = Blueprint(__name__, 'home')
 
 @bp.route('/')
@@ -99,6 +99,7 @@ def home():
 ```python
 # website/app.py
 from flask import Flask
+from .routes import bp
 
 def create_app(config=None):
     app = Flask(__name__)
@@ -109,6 +110,9 @@ def create_app(config=None):
         elif config.endswith('.py'):
             app.config.from_pyfile(config)
     return app
+
+def setup_app(app):
+    app.register_blueprint(bp, url_prefix='')
 ```
 
 ```python
